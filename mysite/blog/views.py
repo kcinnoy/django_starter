@@ -5,7 +5,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def post_list(request):
     object_list = Post.published.all()
     paginator = Paginator(object_list,3)
-    page = request.Get.get('page')
+    page = request.GET.get('page')
+    
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -13,9 +14,9 @@ def post_list(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
     return render(request,'blog/post/list.html',
-                  {'page':page},
-                  {'posts': posts})
+                  {'page':page,'posts': posts})
    
+
 
 def post_detail(request, year, month, day, post):
    post = get_object_or_404(Post, slug=post, 
